@@ -33,10 +33,7 @@
             "networkMbps": 128
           },
           "securityGroups": [],
-          "strategy": "highlander",
-          "containerAttributes": {
-            "metatron.secretName": "giphy-mcp-server/GIPHY_API_KEY"
-          }
+          "strategy": "highlander"
         }
       ],
       "name": "Deploy",

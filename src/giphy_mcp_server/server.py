@@ -28,10 +28,18 @@ BASE_URL = "https://api.giphy.com/v1/gifs"
 
 
 def _get_api_key() -> str:
+    # In production (Titus), the key is decrypted from root/metatron/encrypted/GIPHY_API_KEY.mtb
+    metatron_path = "/metatron/decrypted/GIPHY_API_KEY"
+    if os.path.exists(metatron_path):
+        with open(metatron_path) as f:
+            key = f.read().strip()
+        if key:
+            return key
     key = os.environ.get("GIPHY_API_KEY")
     if not key:
         raise RuntimeError(
-            "GIPHY_API_KEY environment variable is not set. "
+            "GIPHY_API_KEY not set. Set GIPHY_API_KEY env var or store encrypted "
+            "secret at root/metatron/encrypted/GIPHY_API_KEY.mtb. "
             "Get a free API key at https://developers.giphy.com/"
         )
     return key
