@@ -1,0 +1,65 @@
+{
+  "application": "{{ .SpinnakerApp }}",
+  "name": "{{ .PipelineName }}",
+  "keepWaitingPipelines": false,
+  "limitConcurrent": true,
+  "parallel": true,
+  "stages": [
+    {
+      "clusters": [
+        {
+          "account": "titusprodvpc",
+          "application": "{{.SpinnakerApp}}",
+          "capacity": {
+            "desired": 1,
+            "max": 1,
+            "min": 1
+          },
+          "cloudProvider": "titus",
+          "env": {},
+          "imageId": "${trigger.properties.imageName ?: parameters.imageName}",
+          "inService": true,
+          "labels": {},
+          "network": "default",
+          "networkMode": "Ipv6AndIpv4",
+          "provider": "titus",
+          "region": "us-east-1",
+          "registry": "prodregistry",
+          "resources": {
+            "allocateIpAddress": true,
+            "cpu": 1,
+            "disk": 10000,
+            "memory": 512,
+            "networkMbps": 128
+          },
+          "securityGroups": [],
+          "strategy": "highlander",
+          "containerAttributes": {
+            "metatron.secretName": "giphy-mcp-server/GIPHY_API_KEY"
+          }
+        }
+      ],
+      "name": "Deploy",
+      "refId": "1",
+      "requisiteStageRefIds": [],
+      "type": "deploy"
+    }
+  ],
+  "parameterConfig": [
+    {
+      "name": "imageName",
+      "description": "Docker image to deploy (e.g. npow/giphy-mcp-server:main-h7.f170c69)",
+      "required": false,
+      "default": ""
+    }
+  ],
+  "triggers": [
+    {
+      "enabled": true,
+      "job": "{{.JenkinsDefaultJob}}",
+      "master": "{{.JenkinsController}}",
+      "propertyFile": "image.properties",
+      "type": "jenkins"
+    }
+  ]
+}

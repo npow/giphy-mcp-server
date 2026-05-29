@@ -1,0 +1,7 @@
+#!/bin/bash
+set -efx
+
+newt test
+if [[ "$ROCKET_BRANCH" =~ ^(main)$ ]]; then
+    newt docker build --push
+fi

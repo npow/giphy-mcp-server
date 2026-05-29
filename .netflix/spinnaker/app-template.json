@@ -1,0 +1,23 @@
+{
+  "job": [
+    {
+      "type": "createApplication",
+      "application": {
+        "name": "{{ .SpinnakerApp }}",
+        "email": "{{ .TeamEmail }}",
+        "repoType": "{{ .RocketHostKey }}",
+        "repoProjectKey": "{{ .GitOrigin.Owner }}",
+        "repoSlug": "{{ .RepoName }}",
+        "cloudProviders": "aws,titus",
+        "legacyUdf": false,
+        "appGeneratorMetadata": {
+          "generator": "cookiecutter-newt-python",
+          "type": "python"
+        }
+      },
+      "user": "{{ .User }}"
+    }
+  ],
+  "application": "{{ .SpinnakerApp }}",
+  "description": "{{ .SpinnakerApp }} generated with newt ({{ .AppType }})"
+}

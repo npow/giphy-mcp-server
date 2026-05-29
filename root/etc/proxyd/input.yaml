@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=http://snweb.test.netflix.net/files/MeshRoot.json
+apiVersion: v1
+spec:
+  meshServers:
+    - name: "giphymcpserver"
+      config:
+        localTargets:
+          - name: lo_svc_http
+            httpWorkload:
+              port: 7101
+              healthcheck: /healthcheck
+              requestTimeoutMs: 300000
+        listeners:
+          - name: plaintext
+            port: 80
+            handlers:
+              - trafficOrigin: ALL_INTERFACES
+                http:
+                  defaultRoute:
+                    localTargetName: lo_svc_http
+                  security:
+                    plaintext: {}
+          - name: web-tls
+            port: 443
+            handlers:
+              - http:
+                  defaultRoute:
+                    localTargetName: lo_svc_http
+                  security:
+                    tls:
+                      httpAuthorization:
+                        enabled: true
+                        contextFormat: JSON
+                      meechum:
+                        enabled: true
+                trafficOrigin: ALL_INTERFACES
+          - name: metatron-rest
+            port: 7004
+            handlers:
+              - http:
+                  defaultRoute:
+                    localTargetName: lo_svc_http
+                  security:
+                    metatron:
+                      httpAuthorization:
+                        enabled: true
+                        contextFormat: JSON
+                      forwardClientCert: false
+                trafficOrigin: ALL_INTERFACES
+          - name: mesh-port
+            port: 7001
+            handlers:
+              - http:
+                  defaultRoute:
+                    localTargetName: lo_svc_http
+                  security:
+                    plaintext: {}

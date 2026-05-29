@@ -1,0 +1,9 @@
+EZCONFIG_RUNTIME = 2
+WSGI_SVC_START = enabled
+WSGI_APPNAME = giphy-mcp-server
+WSGI_VIRTUALENV = /apps/giphy-mcp-server
+WSGI_MODULE = giphy_mcp_server.nflx_server
+WSGI_VARIABLE = app
+WSGI_INTERFACE = 127.0.0.1
+WSGI_ARGS = --worker-class=uvicorn.workers.UvicornWorker --workers=1 --timeout=600 -c /apps/giphy-mcp-server/lib/python3.11/site-packages/giphy_mcp_server/gunicorn_conf.py
+PROXY_TYPE = mesh

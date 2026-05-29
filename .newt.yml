@@ -1,0 +1,21 @@
+app-name: giphy-mcp-server
+app-type: python
+custom-info-responses:
+  Spinnaker: "true"
+  SpinnakerTitusDeploy: "true"
+description: Giphy MCP Server -- exposes Giphy GIF search as MCP tools via the GenAI MCP Gateway
+github-owner: npow
+jenkins-controller: spinnaker
+jenkins-default-job: NPOW-giphy-mcp-server-main
+jenkins-jobs:
+  - NPOW-giphy-mcp-server-main
+  - NPOW-giphy-mcp-server-pull-request
+name: giphy-mcp-server
+org: npow
+python:
+  test-versions:
+    - "3.11"
+spinnaker-app: giphymcpserver
+team-email: npow@netflix.com
+tool-versions:
+  python: "3.11"
